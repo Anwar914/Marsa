@@ -2,13 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 html, body, #root { height: 100%; margin: 0; }
-body { font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+body { font-family: Inter, 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
 .scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-.scroll-thin::-webkit-scrollbar-thumb { background: rgba(148,163,184,.35); border-radius: 3px; }
-.btn { @apply inline-flex items-center justify-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-medium transition select-none disabled:opacity-40; }
-.btn-ghost { @apply border-slate-300 bg-white/70 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-200 dark:hover:bg-slate-700; }
-.btn-on { @apply border-cyan-500 bg-cyan-500/15 text-cyan-700 dark:text-cyan-300; }
-.btn-primary { @apply border-cyan-600 bg-cyan-600 text-white hover:bg-cyan-500; }
-.card { @apply rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-slate-900; }
-.label { @apply text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(138,161,155,.35); border-radius: 3px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+.btn { @apply inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-lg border px-2.5 py-1.5 text-xs font-medium transition select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-40; }
+.btn-ghost { @apply border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800; }
+.btn-on { @apply border-brand-500 bg-brand-500/15 text-brand-700 dark:border-brand-400 dark:bg-brand-400/15 dark:text-brand-200; }
+.btn-primary { @apply border-brand-600 bg-brand-600 text-white hover:bg-brand-700 dark:border-accent dark:bg-accent dark:text-accent-ink dark:hover:bg-accent-strong; }
+.card { @apply rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-800 dark:bg-slate-900; }
+.label { @apply text-[10px] font-semibold uppercase tracking-[.12em] text-slate-500 dark:text-slate-400; }
 .ipa { font-family: 'Charis SIL', 'Doulos SIL', 'Gentium Plus', 'Lucida Sans Unicode', 'Segoe UI', sans-serif; }
+.toolgroup { @apply flex shrink-0 items-center gap-0.5 rounded-lg border border-slate-200 bg-white/90 p-0.5 dark:border-slate-700/80 dark:bg-slate-900/85; }
+.toolbtn { @apply inline-flex shrink-0 whitespace-nowrap h-8 min-w-8 items-center justify-center gap-1.5 rounded-md px-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:opacity-40 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white; }
+.toolbtn-on { @apply bg-brand-500/15 text-brand-700 dark:bg-brand-400/20 dark:text-brand-200; }

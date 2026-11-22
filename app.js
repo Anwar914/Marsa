@@ -115,7 +115,7 @@ function courseSummary(){const gs=groupStats();const best=Math.max(0,...DATA.exa
 function publish(){const sum=courseSummary();try{localStorage.setItem('werkstatt-summary',JSON.stringify(sum))}catch(e){}if(EMBED)parent.postMessage({type:'course-progress',summary:sum},'*')}
 // In-page links: resolve '#route' against this page (inside an iframe srcdoc the base URL is the parent app)
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(a&&!e.defaultPrevented&&!e.metaKey&&!e.ctrlKey){e.preventDefault();const r=a.getAttribute('href').slice(1);if(r==='main'){$('#main').focus();return}location.hash=r}});
-window.addEventListener('message',e=>{const d=e.data||{};if(d.type==='theme'){state.theme=d.value;try{localStorage.setItem('werkstatt-v1',JSON.stringify(state))}catch(_){}applyTheme()}if(d.type==='go'&&d.route){location.hash=d.route}});
+window.addEventListener('message',e=>{const d=e.data||{};if(d.type==='theme'){state.theme=d.value;try{localStorage.setItem('werkstatt-v1',JSON.stringify(state))}catch(_){}applyTheme()}if(d.type==='go'&&d.route){location.hash=d.route}if(d.type==='rate'&&+d.value){state.rate=+d.value;try{localStorage.setItem('werkstatt-v1',JSON.stringify(state))}catch(_){}}});
 window.addEventListener('hashchange',render);if(EMBED)document.documentElement.classList.add('embedded');applyTheme();{const r=$('#rate');if(r)r.value=String(state.rate||0.9)}if(hasTTS)speechSynthesis.onvoiceschanged=()=>{};render();try{publish()}catch(e){}
 
 

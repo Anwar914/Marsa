@@ -8,10 +8,12 @@ export function CourseView() {
   const frame = useRef<HTMLIFrameElement>(null);
   const theme = useStore((s) => s.theme);
   const route = useStore((s) => s.courseRoute);
+  const rate = useStore((s) => s.speechRate);
 
   const loaded = useRef(false);
   const post = (msg: unknown) => frame.current?.contentWindow?.postMessage(msg, '*');
   useEffect(() => { if (loaded.current) post({ type: 'theme', value: theme }); }, [theme]);
+  useEffect(() => { if (loaded.current) post({ type: 'rate', value: rate }); }, [rate]);
   // routes requested before the frame has loaded are applied in onLoad
   useEffect(() => { if (route && loaded.current) { post({ type: 'go', route }); useStore.getState().set({ courseRoute: null }); } }, [route]);
 
@@ -20,10 +22,11 @@ export function CourseView() {
       ref={frame}
       title="Technical English course"
       srcDoc={html}
-      className="h-full w-full border-0 bg-white dark:bg-slate-950"
+      className="h-full w-full border-0 bg-slate-50 dark:bg-slate-950"
       onLoad={() => {
         loaded.current = true;
         post({ type: 'theme', value: useStore.getState().theme });
+        post({ type: 'rate', value: useStore.getState().speechRate });
         const r = useStore.getState().courseRoute;
         if (r) { post({ type: 'go', route: r }); useStore.getState().set({ courseRoute: null }); }
       }}

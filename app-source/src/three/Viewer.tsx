@@ -50,7 +50,7 @@ function CameraRig() {
     const center = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
     const dir = camera.position.clone().sub(controls.target).normalize();
-    const dist = Math.max(size * 1.8, CAMERAS[moduleId].grid * 0.15);
+    const dist = Math.max(size * 2.4, CAMERAS[moduleId].grid * 0.55);
     goal.current = { pos: center.clone().add(dir.multiplyScalar(dist)), target: center, k: 0 };
     invalidate();
   }, [focusToken]);
@@ -85,7 +85,7 @@ function SelectedLabel() {
   return (
     <group ref={ref}>
       <Html center distanceFactor={undefined} style={{ pointerEvents: 'none', transform: 'translateY(-26px)' }} zIndexRange={[20, 0]}>
-        <div className="whitespace-nowrap rounded-md border border-cyan-400/60 bg-slate-900/85 px-2 py-1 text-xs font-semibold text-cyan-100 shadow-lg">
+        <div className="whitespace-nowrap rounded-lg border border-accent/70 bg-slate-950/85 px-2.5 py-1 text-xs font-semibold text-accent shadow-lg backdrop-blur">
           {p.nameEn} <span className="font-normal text-slate-300">· {p.nameDe}</span>
         </div>
       </Html>
@@ -109,7 +109,7 @@ export function Viewer() {
       onCreated={({ gl }) => { gl.localClippingEnabled = true; }}
       onPointerMissed={(e) => { if (e.type === 'click' && useStore.getState().tab !== 'quiz') useStore.getState().select(null); }}
     >
-      <color attach="background" args={[theme === 'dark' ? '#0b1220' : '#eef2f7']} />
+      <color attach="background" args={[theme === 'dark' ? '#0b1514' : '#e9efed']} />
       <ambientLight intensity={0.35} />
       <directionalLight position={[5, 8, 5]} intensity={1.6} />
       <directionalLight position={[-6, 4, -4]} intensity={0.5} />
@@ -117,11 +117,11 @@ export function Viewer() {
         <Lightformer form="rect" intensity={1.1} position={[0, 5, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} />
         <Lightformer form="rect" intensity={1.2} position={[-5, 1, -1]} rotation-y={Math.PI / 2} scale={[20, 2, 1]} />
         <Lightformer form="rect" intensity={1.2} position={[5, 1, 1]} rotation-y={-Math.PI / 2} scale={[20, 2, 1]} />
-        <Lightformer form="ring" color="#7dd3fc" intensity={1} position={[0, 2, 6]} scale={3} />
+        <Lightformer form="ring" color="#d6ee94" intensity={0.8} position={[0, 2, 6]} scale={3} />
       </Environment>
       <Grid
         position={[0, -0.001, 0]} args={[40 * grid, 40 * grid]} cellSize={grid / 10} sectionSize={grid}
-        cellColor={theme === 'dark' ? '#1e293b' : '#cbd5e1'} sectionColor={theme === 'dark' ? '#334155' : '#94a3b8'}
+        cellColor={theme === 'dark' ? '#1a2928' : '#cfdbd7'} sectionColor={theme === 'dark' ? '#2a403d' : '#9fb3ad'}
         fadeDistance={30 * grid} infiniteGrid followCamera={false}
       />
       <Suspense fallback={null}>

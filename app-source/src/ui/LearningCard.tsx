@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useStore } from '../store';
-import { getPart, MODULE_MAP } from '../data';
+import { getPart, MODULE_MAP, partsOfModule } from '../data';
+import { mastery } from '../srs';
+import { Icon } from './icons';
 import { useT } from '../i18n';
 import { SpeakBtn, MasteryDot, useL } from './common';
 import { Pronounce } from './Pronounce';
@@ -122,14 +124,54 @@ export function SelectedCard() {
   const t = useT();
   const id = useStore((s) => s.selectedId);
   const p = getPart(id);
-  if (!p) {
-    return (
-      <div className="space-y-2 p-1 text-sm text-slate-500">
-        <p className="text-base font-semibold text-slate-700 dark:text-slate-200">{t('noSelection')}</p>
-        <p>{t('noSelectionHint')}</p>
-        <p className="text-xs">SEE → CLICK → HEAR → UNDERSTAND → REPEAT → PRACTICE</p>
-      </div>
-    );
-  }
+  if (!p) return <ModuleOverview />;
   return <LearningCard part={p} />;
+}
+
+/** Shown when nothing is selected: what this module offers and where to start. */
+function ModuleOverview() {
+  const t = useT(); const L = useL();
+  const moduleId = useStore((s) => s.moduleId);
+  const progress = useStore((s) => s.progress);
+  const scene = useStore((s) => s.scenePartIds);
+  const m = MODULE_MAP[moduleId];
+  const parts = partsOfModule(moduleId);
+  const seen = parts.filter((p) => mastery(progress[p.id]) !== 'new').length;
+  const mastered = parts.filter((p) => mastery(progress[p.id]) === 'mastered').length;
+  const inScene = new Set(scene);
+  const pick = (id: string) => { useStore.getState().select(id); useStore.setState((x) => ({ focusToken: x.focusToken + 1 })); };
+  return (
+    <div className="space-y-4 text-sm">
+      <div className="flex items-start gap-3">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-600 font-mono text-lg font-bold text-accent">{m.letter}</span>
+        <div>
+          <div className="label">{L('Module', 'Modul')} {m.letter}</div>
+          <h2 className="text-lg font-bold leading-tight text-slate-900 dark:text-white">{L(m.nameEn, m.nameDe)}</h2>
+          <p className="mt-1 text-slate-600 dark:text-slate-400">{L(m.descEn, m.descDe)}</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-2 text-center">
+        {[[parts.length, L('terms', 'Begriffe')], [seen, L('seen', 'gesehen')], [mastered, L('mastered', 'sicher')]].map(([v, l]) => (
+          <div key={l as string} className="rounded-lg bg-slate-100 py-2 dark:bg-slate-800/70"><div className="text-lg font-bold tabular-nums text-slate-900 dark:text-white">{v}</div><div className="text-[11px] text-slate-500">{l}</div></div>
+        ))}
+      </div>
+      <div className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800"><div className="h-full rounded-full bg-brand-500" style={{ width: `${(seen / parts.length) * 100}%` }} /></div>
+      <div className="grid grid-cols-2 gap-2">
+        <button className="btn btn-primary justify-center py-2 text-[13px]" onClick={() => useStore.getState().set({ tab: 'learn' })}><Icon name="learn" size={15} />{L('Guided lesson', 'Geführte Lektion')}</button>
+        <button className="btn btn-ghost justify-center py-2 text-[13px]" onClick={() => useStore.getState().set({ tab: 'quiz' })}><Icon name="quiz" size={15} />{L('Quiz module', 'Modul-Quiz')}</button>
+      </div>
+      <div>
+        <div className="label mb-2">{L('Click a part to start', 'Bauteil anklicken und loslegen')}</div>
+        <div className="flex flex-wrap gap-1.5">
+          {parts.filter((p) => inScene.has(p.id)).slice(0, 14).map((p) => (
+            <button key={p.id} onClick={() => pick(p.id)} className="rounded-full border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-700 transition hover:border-brand-400 hover:bg-brand-50 hover:text-brand-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-brand-900/40 dark:hover:text-brand-100">{p.nameEn}</button>
+          ))}
+        </div>
+      </div>
+      <div className="rounded-lg border border-dashed border-slate-300 p-3 text-xs leading-relaxed text-slate-500 dark:border-slate-700">
+        <b className="text-slate-700 dark:text-slate-300">{t('noSelection')}</b><br />{t('noSelectionHint')}
+        <div className="mt-1.5 font-semibold tracking-wide text-brand-700 dark:text-accent">SEE → CLICK → HEAR → UNDERSTAND → REPEAT → PRACTICE</div>
+      </div>
+    </div>
+  );
 }

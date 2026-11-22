@@ -9,8 +9,8 @@ import { handlePartClick } from './interaction';
 export const CutContext = createContext<THREE.Plane[]>([new THREE.Plane(new THREE.Vector3(0, 0, -1), 0)]);
 
 const noRaycast = () => {};
-const HOVER = new THREE.Color('#38bdf8');
-const SELECT = new THREE.Color('#22d3ee');
+const HOVER = new THREE.Color('#3fb39a');
+const SELECT = new THREE.Color('#b6e85a');
 const QUIZ = new THREE.Color('#f97316');
 
 interface Orig { color: THREE.Color; emissive: THREE.Color; emissiveIntensity: number; opacity: number; transparent: boolean; depthWrite: boolean; side: THREE.Side }

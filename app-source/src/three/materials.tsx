@@ -3,7 +3,7 @@ import * as THREE from 'three';
 type MP = { color: string; metalness?: number; roughness?: number; opacity?: number; transparent?: boolean; emissive?: string; emissiveIntensity?: number; side?: THREE.Side };
 export const MATS = {
   paint: { color: '#2563eb', metalness: 0.5, roughness: 0.32 },
-  carPaint: { color: '#1d4f91', metalness: 0.6, roughness: 0.28, side: THREE.DoubleSide },
+  carPaint: { color: '#14535c', metalness: 0.65, roughness: 0.26, side: THREE.DoubleSide },
   trim: { color: '#0b0d10', metalness: 0.1, roughness: 0.5, side: THREE.DoubleSide },
   tintGlass: { color: '#1e293b', metalness: 0.3, roughness: 0.02, opacity: 0.42, transparent: true, side: THREE.DoubleSide },
   headGlass: { color: '#e0f2fe', metalness: 0.2, roughness: 0.02, opacity: 0.35, transparent: true, side: THREE.DoubleSide },

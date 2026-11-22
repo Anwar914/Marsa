@@ -34,7 +34,7 @@ export function Sidebar() {
     <aside className="flex h-full w-full flex-col gap-3 overflow-hidden">
       <div className="relative">
         <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t('search')}
-          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-500 dark:border-slate-700 dark:bg-slate-900" />
+          className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-950 dark:focus:bg-slate-950" />
         {results.length > 0 && (
           <div className="absolute z-30 mt-1 max-h-80 w-full overflow-auto rounded-md border border-slate-200 bg-white shadow-xl scroll-thin dark:border-slate-700 dark:bg-slate-900">
             {results.map((p) => (
@@ -57,7 +57,7 @@ export function Sidebar() {
           return (
             <button key={m.id} onClick={() => useStore.getState().setModule(m.id)}
               className={`group flex items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm transition ${active ? 'bg-cyan-500/15 text-cyan-800 dark:text-cyan-200' : 'hover:bg-slate-200/60 dark:hover:bg-slate-800'}`}>
-              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded font-mono text-xs font-bold ${active ? 'bg-cyan-600 text-white' : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>{m.letter}</span>
+              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded font-mono text-xs font-bold ${active ? 'bg-brand-600 text-accent' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>{m.letter}</span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate font-medium">{L(m.nameEn, m.nameDe)}</span>
                 <span className="mt-0.5 block h-1 overflow-hidden rounded bg-slate-200 dark:bg-slate-800">
