@@ -16,3 +16,10 @@ Open Marsa.html for offline learning, or index.html with the adjacent source ass
 ## Deploy
 
 On Streamlit Community Cloud, select this repository, main, and streamlit_app.py. No API keys or other services are required.
+
+
+## Live app
+
+[Open Marsa](https://marsa-english.streamlit.app/)
+
+Use the section switch at the top to open **3D car anatomy**, which includes the uploaded AutoAnatomy3D model, component exploration and quizzes. The learning workspace includes the original modules, memory activities and practice exams. Hosted navigation is handled within the embedded workspace.
